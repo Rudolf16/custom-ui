@@ -1,3 +1,4 @@
+import { Checkbox } from "./components/checkbox/Checkbox";
 
 
 function App() {

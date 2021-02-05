@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components';
 
 
@@ -26,13 +26,24 @@ const CheckCircle=styled.div`
 
 `
 
-export const Checkbox = ({defaultChecked,disabled,checked=false}) => {
+export const Checkbox = ({onlyUnactive,onlyActive,onChange,defaultChecked,disabled,checked=false}) => {
     
     const [procent,setProcent]=useState(defaultChecked?100:0)
     const checkedHandler=()=>{
         setProcent(procent===0?100:0);
         checked=!checked
     }
+    useEffect(()=>{
+        if(onChange){
+            if(onlyActive){
+                if(procent===100)onChange()
+                
+            } else if(onlyUnactive){
+                if(procent===0)onChange()
+            }else{onChange()}
+            
+        }
+    },[procent])
     defaultChecked?checked=true:checked=false
     return (
         <CheckContainer  procent={procent} onClick={disabled?null:checkedHandler}>
